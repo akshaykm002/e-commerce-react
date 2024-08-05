@@ -22,6 +22,20 @@ export const updateProduct = createAsyncThunk('products/updateProduct', async ({
   return response.data;
 });
 
+export const searchProducts = createAsyncThunk('products/searchProducts', async (params) => {
+  const { query, priceMin, priceMax, sortBy, sortOrder } = params;
+  const response = await axios.get('http://localhost:4000/api/products/search', {
+    params: { query, priceMin, priceMax, sortBy, sortOrder },
+  });
+  return response.data;
+});
+
+export const fetchSearchResults = createAsyncThunk('products/fetchSearchResults', async (query) => {
+  const response = await axios.get(`http://localhost:4000/api/products/search?query=${query}`);
+  return response.data;
+});
+  
+
 const productsSlice = createSlice({
   name: 'products',
   initialState: {
@@ -79,6 +93,28 @@ const productsSlice = createSlice({
         state.loading = false;
       })
       .addCase(updateProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(searchProducts.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(searchProducts.fulfilled, (state, action) => {
+        state.products = action.payload;
+        state.loading = false;
+      })
+      .addCase(searchProducts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(fetchSearchResults.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchSearchResults.fulfilled, (state, action) => {
+        state.products = action.payload;
+        state.loading = false;
+      })
+      .addCase(fetchSearchResults.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

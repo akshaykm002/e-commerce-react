@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ProductForm = () => {
+function ProductForm() {
   return (
     <div>ProductForm</div>
   )

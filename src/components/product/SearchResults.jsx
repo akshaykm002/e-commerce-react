@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { fetchSearchResults } from '../../redux/products/productsSlice';
 import ProductCard from './ProductCard';
+import { Container, Row } from 'react-bootstrap';
+import noresult from '../../images/no-result.webp'
 
 const SearchResults = () => {
   const dispatch = useDispatch();
@@ -22,8 +24,8 @@ const SearchResults = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="container">
-      <div className="row">
+    <Container>
+      <Row>
         {products.length > 0 ? (
           products.map((product) => (
             <div key={product.id} className="col-md-3 mb-4">
@@ -31,10 +33,19 @@ const SearchResults = () => {
             </div>
           ))
         ) : (
-          <p>No products available</p>
+            <div className="text-center mt-5 w-100">
+            <img 
+              src={noresult}
+              alt="No results"
+              className="mb-3"
+              style={{ maxWidth: '250px', width: '100%' }}
+            />
+            <h2>Sorry, no results found!</h2>
+            <h6 style={{color:'grey'}}>Please check the spelling or try searching for something else.</h6>
+          </div>
         )}
-      </div>
-    </div>
+      </Row>
+    </Container>
   );
 };
 

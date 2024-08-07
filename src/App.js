@@ -18,10 +18,10 @@ function App() {
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/products" element={<ProductList />} />
-          <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/productForm" element={<ProductForm />} />
+          <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/search" element={<SearchResults />} />
-
+          <Route path="/product-form" element={<ProductForm />} />
+          <Route path="/product-form/:id" element={<ProductForm />} />
         </Routes>
       </MainLayout>
     </BrowserRouter>

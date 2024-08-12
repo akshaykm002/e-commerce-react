@@ -1,6 +1,8 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
 import LoginForm from './components/authentication/LoginForm';
 import RegisterForm from './components/authentication/RegisterForm';
@@ -13,41 +15,37 @@ import Cart from './components/cart/Cart';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import OrderForm from './components/order/OrderForm';
+import OrderList from './components/order/OrderList';
 
+// Replace this with your actual public Stripe API key
+const stripePromise = loadStripe('pk_test_51Pc3Kf2LYgbJpp0urbjtRsV0hFC6DmWyX2VJequa8BpDJycvOHcl1Pqc1iYSVcBGB21VM3IJJGIATgMXRUzrEfM800HOqFhkPK');
 
 function App() {
-  // const notify = () => toast("Hello World!");
-
   return (
     <BrowserRouter>
-      <MainLayout>
-        <Routes>
-          
-          
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/register" element={<RegisterForm />} />
-          <Route path="/products" element={<ProductList />} />
-          <Route path="/products/:id" element={<ProductDetail />} />
-          <Route path="/search" element={<SearchResults />} />
-          <Route path="/product-form" element={<ProductForm />} />
-          <Route path="/product-form/:id" element={<ProductForm />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/checkout" element={< OrderForm/>} />
-
-
-
-        </Routes>
-        {/* <button onClick={notify}>Notify!</button> */}
-        <ToastContainer />
-
-      </MainLayout>
+      <Elements stripe={stripePromise}>
+        <MainLayout>
+          <Routes>
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/register" element={<RegisterForm />} />
+            <Route path="/products" element={<ProductList />} />
+            <Route path="/products/:id" element={<ProductDetail />} />
+            <Route path="/search" element={<SearchResults />} />
+            <Route path="/product-form" element={<ProductForm />} />
+            <Route path="/product-form/:id" element={<ProductForm />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<OrderForm />} />
+            <Route path="/orders" element={<OrderList />} />
+          </Routes>
+          <ToastContainer />
+        </MainLayout>
+      </Elements>
     </BrowserRouter>
   );
 }
 
 const MainLayout = ({ children }) => {
   const location = useLocation();
-
   const hideNavbar = location.pathname === '/login' || location.pathname === '/register';
 
   return (

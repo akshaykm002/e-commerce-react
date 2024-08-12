@@ -92,6 +92,25 @@ export const fetchReviews = createAsyncThunk(
     }
   }
 );
+export const addReview = createAsyncThunk(
+  'products/addReview',
+  async ({ productId, rating, comment }, { getState }) => {
+    const state = getState();
+    const token = state.auth.token;
+
+    const response = await axios.post(
+      `http://localhost:4000/api/products/review/${productId}`,
+      { rating, comment },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return response.data.updatedProduct; // Assuming your backend returns the updated product
+  }
+);
 
 const productsSlice = createSlice({
   name: 'products',
@@ -191,6 +210,17 @@ const productsSlice = createSlice({
         state.loading = false;
       })
       .addCase(fetchReviews.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(addReview.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(addReview.fulfilled, (state, action) => {
+        state.loading = false;
+        state.product = action.payload; 
+      })
+      .addCase(addReview.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

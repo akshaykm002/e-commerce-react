@@ -3,14 +3,19 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:4000/api/orders';
 
+// Updated createOrder thunk to include payment details
 export const createOrder = createAsyncThunk('orders/createOrder', async (orderData, { getState }) => {
     const { auth } = getState();
-    const response = await axios.post(API_URL, orderData, {
-        headers: {
-            Authorization: `Bearer ${auth.token}`,
-        },
-    });
-    return response.data;
+    try {
+        const response = await axios.post(API_URL, orderData, {
+            headers: {
+                Authorization: `Bearer ${auth.token}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        return Promise.reject(error.response.data); // Handle API error response
+    }
 });
 
 const orderSlice = createSlice({
@@ -19,6 +24,7 @@ const orderSlice = createSlice({
         orders: [],
         loading: false,
         error: null,
+        paymentIntent: null, // Track payment intent here
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -29,7 +35,8 @@ const orderSlice = createSlice({
             })
             .addCase(createOrder.fulfilled, (state, action) => {
                 state.loading = false;
-                state.orders.push(action.payload);
+                state.orders.push(action.payload.order); // Assuming order is in the response
+                state.paymentIntent = action.payload.paymentIntent; // Track payment intent here
             })
             .addCase(createOrder.rejected, (state, action) => {
                 state.loading = false;

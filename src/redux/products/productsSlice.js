@@ -80,6 +80,18 @@ export const deleteProduct = createAsyncThunk(
     }
   }
 );
+// Fetch reviews for a product
+export const fetchReviews = createAsyncThunk(
+  'products/fetchReviews',
+  async (productId, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`http://localhost:4000/api/products/review/${productId}`);
+      return response.data.reviews;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
 
 const productsSlice = createSlice({
   name: 'products',
@@ -168,6 +180,17 @@ const productsSlice = createSlice({
         state.loading = false;
       })
       .addCase(deleteProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(fetchReviews.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchReviews.fulfilled, (state, action) => {
+        state.reviews = action.payload;
+        state.loading = false;
+      })
+      .addCase(fetchReviews.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

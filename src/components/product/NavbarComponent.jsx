@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navbar, Nav, Form, FormControl, Button, Container, InputGroup, NavDropdown } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaShoppingCart, FaSearch } from 'react-icons/fa';
+import { FaShoppingCart, FaSearch, FaPowerOff, FaMailBulk } from 'react-icons/fa';
 import { searchProducts } from '../../redux/products/productsSlice';
 import { logout } from '../../redux/auth/authSlice'; 
 import logo from '../../images/38248895-removebg-preview.png'
@@ -64,9 +64,11 @@ const NavbarComponent = () => {
               <h5>Cart</h5>
             </Nav.Link>
             {username ? (
-              <NavDropdown title={username} id="user-dropdown">
-                <NavDropdown.Item as={Link} to="/orders">Orders</NavDropdown.Item>
-                <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
+              <NavDropdown style={{fontWeight:'bold'}} title={username} id="user-dropdown">
+                <NavDropdown.Item as={Link} to="/orders"><FaMailBulk className='me-2 '/>
+                <span style={{fontWeight:'600'}}>Orders</span>
+                </NavDropdown.Item>
+                <NavDropdown.Item onClick={handleLogout}><FaPowerOff className='me-2 '/><span style={{fontWeight:'600'}}>Logout</span> </NavDropdown.Item>
               </NavDropdown>
             ) : (
               <Nav.Link className='ms-5' as={Link} to="/login"><h5>Login</h5></Nav.Link>

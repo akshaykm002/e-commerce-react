@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { fetchProductById } from '../../redux/products/productsSlice.js';
 import { addToCart, fetchCart, updateCartItem } from '../../redux/cart/cartSlice.js';
 import { Container, Card, Spinner, Alert, Col, Row, ListGroup, Button } from 'react-bootstrap';
-import { FaStar } from 'react-icons/fa';
+import { FaArrowAltCircleDown, FaCartPlus, FaStar } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -117,18 +117,25 @@ function ProductDetail() {
   const averageRating = product.reviews ? calculateAverageRating(product.reviews) : 0;
   const totalReviews = product.reviews ? product.reviews.length : 0;
 
+  const handleAddReview = () => {
+    navigate(`/add-review/${product.id}`);
+  };
+
   return (
     <Container style={{ width: '75%' }} className="mt-5">
       <Row>
         <Col md={6}>
           <Card.Img style={{ height: '27rem', width: '23rem' }} variant="top" src={product.imageUrl} />
+          <Button variant="warning" onClick={handleAddToCart} className='w-75 ms-3 mt-2 text-light'>
+            <span className='me-2 fs-5' style={{fontWeight:'650'}}>ADD TO CART</span> <FaCartPlus fontSize={22} className='mb-1' />
+          </Button>
         </Col>
         <Col md={6}>
           <Card.Body>
             <h2>{product.name}</h2>
             <br />
             <Card.Text>{product.description}</Card.Text>
-            <Card.Title className='mb-3'>₹ {product.price}</Card.Title>
+            <h3 className='mb-3'>₹ {product.price}</h3>
             <Card.Text style={{ fontWeight: '600' }} className={product.stock < 11 ? 'text-danger' : ''}>
               {product.stock < 11
                 ? `Hurry !!! Only ${product.stock} stock${product.stock > 1 ? 's' : ''} left`
@@ -151,8 +158,11 @@ function ProductDetail() {
               </div>
               <span style={{ color: 'grey', fontWeight: 'bolder' }}> {totalReviews} reviews</span>
             </div>
-            <h5 onClick={toggleReviews} style={{ cursor: 'pointer', marginTop: '20px' }}>
-              Click to view reviews
+            <div style={{cursor:'pointer'}}  variant="primary" onClick={handleAddReview} className='d-flex align-items-center text-primary mt-3'>
+             <FaStar /> <span style={{fontWeight:'600'}} className='ms-2'>Rate & Review Product</span>
+            </div>
+            <h5 className='text-success' onClick={toggleReviews} style={{ cursor: 'pointer', marginTop: '20px' }}>
+              <span className='me-2'>Click to view reviews</span><FaArrowAltCircleDown/>
             </h5>
             {showReviews && (
               product.reviews && product.reviews.length > 0 ? (
@@ -182,12 +192,10 @@ function ProductDetail() {
                   ))}
                 </ListGroup>
               ) : (
-                <p>No reviews yet</p>
+                <Alert variant="info">No reviews available.</Alert>
               )
             )}
-            <Button variant="primary" onClick={handleAddToCart} className='mt-4'>
-              Add to Cart
-            </Button>
+              
           </Card.Body>
         </Col>
       </Row>

@@ -17,7 +17,20 @@ export const createOrder = createAsyncThunk('orders/createOrder', async (orderDa
         return Promise.reject(error.response.data); // Handle API error response
     }
 });
-
+// Thunk to fetch all orders for the authenticated user
+export const fetchOrders = createAsyncThunk('orders/fetchOrders', async (_, { getState }) => {
+    const { auth } = getState();
+    try {
+        const response = await axios.get(API_URL, {
+            headers: {
+                Authorization: `Bearer ${auth.token}`,
+            },
+        });
+        return response.data; // Assuming response contains an array of orders
+    } catch (error) {
+        return Promise.reject(error.response.data); // Handle API error response
+    }
+});
 const orderSlice = createSlice({
     name: 'orders',
     initialState: {

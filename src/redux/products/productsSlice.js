@@ -92,25 +92,29 @@ export const fetchReviews = createAsyncThunk(
     }
   }
 );
+// productsSlice.js
+
 export const addReview = createAsyncThunk(
   'products/addReview',
-  async ({ productId, rating, comment }, { getState }) => {
-    const state = getState();
-    const token = state.auth.token;
-
-    const response = await axios.post(
-      `http://localhost:4000/api/products/review/${productId}`,
-      { rating, comment },
-      {
+  async ({ productId, rating, comment }, { getState, rejectWithValue }) => {
+    try {
+      const { token } = getState().auth;
+      const response = await axios.post(`http://localhost:4000/api/products/review`, {
+        productId,
+        rating,
+        comment
+      }, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
-    );
-
-    return response.data.updatedProduct; // Assuming your backend returns the updated product
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
 );
+
 
 const productsSlice = createSlice({
   name: 'products',

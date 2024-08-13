@@ -41,7 +41,7 @@ const OrderForm = () => {
                 const productsResponses = await Promise.all(productDetailsPromises);
                 const productDetailsMap = productsResponses.reduce((acc, response) => {
                     const product = response.data;
-                    acc[product.id] = product;
+                    acc[product.id] = product; 
                     return acc;
                 }, {});
                 setProductDetailsMap(productDetailsMap);

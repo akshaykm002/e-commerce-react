@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaEdit, FaStar, FaTrash } from 'react-icons/fa';
+import { FaCartPlus, FaEdit, FaStar, FaTrash } from 'react-icons/fa';
 import { Card, Button, Col } from 'react-bootstrap';
 import './products.css'; 
 import { deleteProduct } from '../../redux/products/productsSlice';
@@ -24,9 +24,29 @@ const ProductCard = ({ product }) => {
 
   const handleDelete = () => {
     if (window.confirm('Are you sure you want to delete this product?')) {
-      dispatch(deleteProduct(product.id));
+      const token = localStorage.getItem('token'); // Or wherever you store the token
+  
+      if (!token) {
+        toast.error('Authentication token is missing. Please login again.', {
+          position: 'top-right',
+        });
+        return;
+      }
+  
+      dispatch(deleteProduct({ id: product.id, token }))
+        .then(() => {
+          toast.success('Product deleted successfully!', {
+            position: 'top-right',
+          });
+        })
+        .catch((error) => {
+          toast.error(`Failed to delete product: ${error.message}`, {
+            position: 'top-right',
+          });
+        });
     }
   };
+  
 
   const handleAddToCart = () => {
     const existingCartItem = cartItems.find(cartItem => cartItem.productId === product.id);
@@ -135,16 +155,34 @@ const ProductCard = ({ product }) => {
           </Card.Title>
           <Card.Text>
             {product.description.length > 30 ? product.description.slice(0, 24) + ' ...' : product.description}
-          </Card.Text>
-          <h6>₹ {product.price}</h6>
+          </Card.Text >
           <Card.Text className={product.stock < 11 ? 'text-danger' : ''}>
             {product.stock < 11
               ? `Hurry !!! Only ${product.stock} stock${product.stock > 1 ? 's' : ''} left`
               : `Stocks: ${product.stock}`}
           </Card.Text>
-          <Button variant="primary" onClick={handleAddToCart} className="mt-2">
-            Add to Cart
-          </Button>
+
+          <div className='d-flex flex-row justify-content-between'>
+          <h5 className='mt-2'>₹ {product.price}</h5>
+
+          <button
+  
+  style={{
+    color: 'white',
+    backgroundColor: 'darkorange',
+    border: 'none',              
+    borderRadius: '5px',  
+    padding: '8px 14px',     
+    cursor: 'pointer'           
+  }}
+  onClick={handleAddToCart}
+>
+  <FaCartPlus fontSize={20} />
+</button>
+
+
+          </div>
+      
           {userType === 'admin' && (
             <div className="d-flex justify-content-between mt-2">
               <Button

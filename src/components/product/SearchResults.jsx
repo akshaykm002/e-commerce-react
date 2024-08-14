@@ -24,6 +24,7 @@ const SearchResults = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
+    <div className='bg-light'>
     <Container>
       <Row>
         {products.length > 0 ? (
@@ -46,6 +47,8 @@ const SearchResults = () => {
         )}
       </Row>
     </Container>
+    </div>
+
   );
 };
 

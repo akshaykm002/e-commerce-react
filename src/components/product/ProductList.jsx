@@ -16,6 +16,7 @@ const ProductList = () => {
   }, [dispatch]);
 
   return (
+    <div className="bg-light">
     <Container className="products-container">
       
       {userType === 'admin' && (
@@ -35,6 +36,8 @@ const ProductList = () => {
         ))}
       </Row>
     </Container>
+    </div>
+
   );
 };
 

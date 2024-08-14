@@ -156,10 +156,11 @@ const OrderForm = () => {
                                     {product ? (
                                         <Row>
                                             <Col md={2}>
-                                                <img height={'120px'} src={product.imageUrl} alt='Product'  />
-                                                <h6 className='ms-4 pt-2'>{product.name}</h6>
+                                                <img height={'110px'} src={product.imageUrl} alt='Product'  />
                                             </Col>
                                             <Col md={8}>
+                                            <h6 className=' pt-2'>{product.name}</h6>
+
                                             <p>{product.description}</p>                                              
                                                 
                                             </Col>
@@ -185,7 +186,7 @@ const OrderForm = () => {
                     <Card.Body>
                         <div className='d-flex justify-content-between'>
                                 <Card.Text>
-                                   <div> An email about order status will be delivered to <strong>{email}</strong></div>
+                                   <div className='mt-3'> An email of your order status will be delivered to <strong>{email}</strong></div>
                                 </Card.Text>
                                 <Button type="submit" variant="success" disabled={loading}>
                                     {loading ? 'Processing...' : 'Place Order'}

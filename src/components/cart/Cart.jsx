@@ -66,6 +66,8 @@ const Cart = () => {
   console.log("Total Amount Calculated:", totalAmount);
 
   return (
+    <div className="bg-light">
+
     <Container>
       {cartItems.length === 0 ? (
         <div className="text-center mt-5 w-100">
@@ -110,6 +112,8 @@ const Cart = () => {
         </>
       )}
     </Container>
+    </div>
+
   );
 };
 

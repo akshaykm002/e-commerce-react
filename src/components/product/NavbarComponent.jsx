@@ -28,9 +28,9 @@ const NavbarComponent = () => {
   };
 
   return (
-    <Navbar bg="warning" expand="lg" sticky='top'>
+    <Navbar style={{backgroundColor:'rgba(0, 137, 145)'}} expand="lg" sticky='top'>
       <Container>
-        <Navbar.Brand as={Link} to="/products" className="me-5 d-flex align-items-center  rounded px-2">
+        <Navbar.Brand as={Link} to="/products" className="me-5 d-flex align-items-center  rounded px-2 mt-1">
           <img
             src={logo}
             
@@ -57,10 +57,10 @@ const NavbarComponent = () => {
               </InputGroup>
             </Form>
           </Nav>
-          <Nav className="ms-auto">
-            <Nav.Link as={Link} to="/cart" className="d-flex align-items-center">
-              <FaShoppingCart size="1.5em" className='mb-2' />
-              <h5 className='me-3'>Cart</h5>
+          <Nav className="ms-auto mt-1 ">
+            <Nav.Link as={Link} to="/cart" className="d-flex align-items-center text-light">
+              <FaShoppingCart size="1.5em" className='mb-2 ' />
+              <h5 className='me-5' >Cart</h5>
             </Nav.Link>
             {username ? (
               <NavDropdown style={{fontWeight:'bold'}} title={username} id="user-dropdown">

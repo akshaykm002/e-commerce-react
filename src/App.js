@@ -18,8 +18,9 @@ import OrderForm from './components/order/OrderForm';
 import OrderList from './components/order/OrderList';
 import AddReview from './components/product/AddReview';
 import NoAccess from './components/authentication/NoAccess';
+import { Navigate } from 'react-router-dom'; 
 
-// Replace this with your actual public Stripe API key
+
 const stripePromise = loadStripe('pk_test_51Pc3Kf2LYgbJpp0urbjtRsV0hFC6DmWyX2VJequa8BpDJycvOHcl1Pqc1iYSVcBGB21VM3IJJGIATgMXRUzrEfM800HOqFhkPK');
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
       <Elements stripe={stripePromise}>
         <MainLayout>
           <Routes>
+            <Route path="/" element={<Navigate to="/products" />} /> 
             <Route path="/login" element={<LoginForm />} />
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/products" element={<ProductList />} />
@@ -52,7 +54,7 @@ function App() {
 
 const MainLayout = ({ children }) => {
   const location = useLocation();
-  const hideNavbar = location.pathname === '/login' || location.pathname === '/register';
+  const hideNavbar = location.pathname === '/login' || location.pathname === '/register' || location.pathname  ==='/';
 
   return (
     <>

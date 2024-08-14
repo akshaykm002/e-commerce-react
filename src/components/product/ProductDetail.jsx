@@ -126,7 +126,7 @@ function ProductDetail() {
       <Row>
         <Col md={6}>
           <Card.Img style={{ height: '27rem', width: '23rem' }} variant="top" src={product.imageUrl} />
-          <Button variant="warning" onClick={handleAddToCart} className='w-75 ms-3 mt-2 text-light'>
+          <Button variant='danger' onClick={handleAddToCart} className='w-75 ms-3 mt-2 text-light'>
             <span className='me-2 fs-5' style={{fontWeight:'650'}}>ADD TO CART</span> <FaCartPlus fontSize={22} className='mb-1' />
           </Button>
         </Col>
@@ -187,7 +187,7 @@ function ProductDetail() {
                         </div>
                         <span style={{ color: 'grey', fontWeight: 'bolder' }}> {review.comment} </span>
                       </div>
-                      <p>{timeAgo(review.createdAt)}</p>
+                      <p style={{fontWeight:'500',color:'grey'}}>{timeAgo(review.createdAt)}</p>
                     </ListGroup.Item>
                   ))}
                 </ListGroup>

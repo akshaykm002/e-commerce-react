@@ -14,7 +14,7 @@ export const createOrder = createAsyncThunk('orders/createOrder', async (orderDa
         });
         return response.data;
     } catch (error) {
-        return Promise.reject(error.response.data); // Handle API error response
+        return Promise.reject(error.response.data); 
     }
 });
 // Thunk to fetch all orders for the authenticated user
@@ -26,9 +26,9 @@ export const fetchOrders = createAsyncThunk('orders/fetchOrders', async (_, { ge
                 Authorization: `Bearer ${auth.token}`,
             },
         });
-        return response.data; // Assuming response contains an array of orders
+        return response.data; 
     } catch (error) {
-        return Promise.reject(error.response.data); // Handle API error response
+        return Promise.reject(error.response.data); 
     }
 });
 const orderSlice = createSlice({
@@ -37,7 +37,7 @@ const orderSlice = createSlice({
         orders: [],
         loading: false,
         error: null,
-        paymentIntent: null, // Track payment intent here
+        paymentIntent: null, 
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -48,8 +48,8 @@ const orderSlice = createSlice({
             })
             .addCase(createOrder.fulfilled, (state, action) => {
                 state.loading = false;
-                state.orders.push(action.payload.order); // Assuming order is in the response
-                state.paymentIntent = action.payload.paymentIntent; // Track payment intent here
+                state.orders.push(action.payload.order); 
+                state.paymentIntent = action.payload.paymentIntent; 
             })
             .addCase(createOrder.rejected, (state, action) => {
                 state.loading = false;

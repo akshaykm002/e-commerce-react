@@ -27,12 +27,12 @@ const OrderList = () => {
 
   return (
     <Container>
-      <h2 className="my-4">My Orders</h2>
+      <h3 className="my-4">Your Orders</h3>
       {error && <Alert variant="danger">{error}</Alert>}
       {orders.length > 0 ? (
         <ListGroup>
           {orders.map((order) => (
-            <ListGroup.Item key={order.id}>
+            <ListGroup.Item key={order.id} className='text-secondary'>
               Order ID: {order.id} <br /> Total Price: ₹{order.totalPrice.toFixed(2)} <br />Payment Id:{order.paymentIntentId}<br/> Status: {order.status}
             </ListGroup.Item>
           ))}

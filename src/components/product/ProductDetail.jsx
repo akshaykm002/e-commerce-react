@@ -77,7 +77,7 @@ function ProductDetail() {
   };
 
   const getRatingColor = (rating) => {
-    if (rating >= 3) return 'green';
+    if (rating > 3) return 'green';
     if (rating >= 2) return 'darkorange';
     if (rating === 0) return 'lightgrey';
     return 'red';

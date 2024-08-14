@@ -17,6 +17,7 @@ import { ToastContainer } from 'react-toastify';
 import OrderForm from './components/order/OrderForm';
 import OrderList from './components/order/OrderList';
 import AddReview from './components/product/AddReview';
+import NoAccess from './components/authentication/NoAccess';
 
 // Replace this with your actual public Stripe API key
 const stripePromise = loadStripe('pk_test_51Pc3Kf2LYgbJpp0urbjtRsV0hFC6DmWyX2VJequa8BpDJycvOHcl1Pqc1iYSVcBGB21VM3IJJGIATgMXRUzrEfM800HOqFhkPK');
@@ -38,6 +39,8 @@ function App() {
             <Route path="/checkout" element={<OrderForm />} />
             <Route path="/orders" element={<OrderList />} />
             <Route path="/add-review/:id" element={<AddReview />} />
+            <Route path="/no-access" element={<NoAccess />} />
+
 
           </Routes>
           <ToastContainer />

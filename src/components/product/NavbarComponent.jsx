@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navbar, Nav, Form, FormControl, Button, Container, InputGroup, NavDropdown } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaShoppingCart, FaSearch, FaPowerOff, FaMailBulk } from 'react-icons/fa';
+import { FaShoppingCart, FaSearch, FaPowerOff, FaBox } from 'react-icons/fa';
 import { searchProducts } from '../../redux/products/productsSlice';
 import { logout } from '../../redux/auth/authSlice'; 
-import logo from '../../images/38248895-removebg-preview.png'
+import logo from '../../images/cartify.png'
 const NavbarComponent = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
@@ -30,15 +30,14 @@ const NavbarComponent = () => {
   return (
     <Navbar bg="warning" expand="lg" sticky='top'>
       <Container>
-        <Navbar.Brand as={Link} to="/products" className="me-5 d-flex align-items-center bg-dark rounded px-2">
+        <Navbar.Brand as={Link} to="/products" className="me-5 d-flex align-items-center  rounded px-2">
           <img
             src={logo}
-            width="40"
-            height="40"
-            className="d-inline-block align-top" 
+            
+            className="d-inline-block align-top " 
             alt="LOGO"
+            style={{width:'160px',height:'50px'}}
           />
-          {' '}<b className='text-warning'>CarTify</b>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -61,11 +60,11 @@ const NavbarComponent = () => {
           <Nav className="ms-auto">
             <Nav.Link as={Link} to="/cart" className="d-flex align-items-center">
               <FaShoppingCart size="1.5em" className='mb-2' />
-              <h5>Cart</h5>
+              <h5 className='me-3'>Cart</h5>
             </Nav.Link>
             {username ? (
               <NavDropdown style={{fontWeight:'bold'}} title={username} id="user-dropdown">
-                <NavDropdown.Item as={Link} to="/orders"><FaMailBulk className='me-2 '/>
+                <NavDropdown.Item as={Link} to="/orders"><FaBox className='me-2 '/>
                 <span style={{fontWeight:'600'}}>Orders</span>
                 </NavDropdown.Item>
                 <NavDropdown.Item onClick={handleLogout}><FaPowerOff className='me-2 '/><span style={{fontWeight:'600'}}>Logout</span> </NavDropdown.Item>

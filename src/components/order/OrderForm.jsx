@@ -103,7 +103,6 @@ const OrderForm = () => {
                 };
             }
 
-            // Dispatch createOrder action
             await dispatch(createOrder(orderData));
             toast.success('Order placed successfully!');
             navigate('/orders');
@@ -142,7 +141,6 @@ const OrderForm = () => {
                     </Form.Group>
                 )}
 
-                {/* Products List */}
                 <Form.Group className="mb-3">
                     <h4>Products in Your Order</h4>
                     <ListGroup>
@@ -152,9 +150,17 @@ const OrderForm = () => {
                                 <ListGroup.Item key={item.productId}>
                                     {product ? (
                                         <Row>
-                                            <Col><h6>{product.name}</h6></Col>
-                                            <Col className="text-end">
-                                                {item.quantity} x {product.price.toFixed(2) } ₹
+                                            <Col md={2}>
+                                                <img height={'120px'} src={product.imageUrl} alt='Product'  />
+                                                <h6 className='ms-4 pt-2'>{product.name}</h6>
+                                            </Col>
+                                            <Col md={8}>
+                                            <p>{product.description}</p>                                              
+                                                
+                                            </Col>
+                                            <Col>
+                                            <h6 className='mb-2'>Quantity :{item.quantity}</h6>
+                                            <h6>Price :₹{product.price.toFixed(2)}</h6>
                                             </Col>
                                         </Row>
                                     ) : (
@@ -166,12 +172,10 @@ const OrderForm = () => {
                     </ListGroup>
                 </Form.Group>
 
-                {/* Total Price */}
                 <Form.Group className="mb-3">
-                    <h4>Total Price: {totalPrice.toFixed(2)} ₹</h4>
+                    <h4>Total Price: ₹{totalPrice.toFixed(2)}</h4>
                 </Form.Group>
 
-                {/* Submit Button */}
                 <Button type="submit" variant="primary" disabled={loading}>
                     {loading ? 'Processing...' : 'Place Order'}
                 </Button>

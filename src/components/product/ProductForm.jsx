@@ -13,7 +13,7 @@ const ProductForm = () => {
     price: '',
     stock: '',
     imageUrl: '',
-    imageFile: null, // Add imageFile to the state
+    imageFile: null
   });
 
   const { id } = useParams();

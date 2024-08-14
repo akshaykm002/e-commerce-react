@@ -126,7 +126,7 @@ const ProductCard = ({ product }) => {
               top: 0,
               left: 0,
               margin:'2px',
-              backgroundColor: averageRating >= 3 ? 'green' : averageRating >= 2 ? 'darkorange' : averageRating === 0 ? 'lightgrey' : 'red',              
+              backgroundColor: averageRating > 3 ? 'green' : averageRating >= 2 ? 'darkorange' : averageRating === 0 ? 'lightgrey' : 'red',              
               borderRadius: '20px',
               boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
               display: 'flex',
@@ -172,7 +172,7 @@ const ProductCard = ({ product }) => {
     backgroundColor: 'darkorange',
     border: 'none',              
     borderRadius: '5px',  
-    padding: '8px 14px',     
+    padding: '6px 12px',     
     cursor: 'pointer'           
   }}
   onClick={handleAddToCart}

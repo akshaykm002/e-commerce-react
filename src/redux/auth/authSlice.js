@@ -21,6 +21,8 @@ export const loginUser = createAsyncThunk('auth/loginUser', async (credentials, 
     localStorage.setItem('token', token);
     localStorage.setItem('username', user.username);
     localStorage.setItem('userType', user.userType);
+    localStorage.setItem('email', user.email);
+
 
     return { token, user };
   } catch (err) {
@@ -40,7 +42,7 @@ const authSlice = createSlice({
   name: 'auth',
   initialState: {
     token: localStorage.getItem('token') || null,
-    email: '',
+    email: localStorage.getItem('email') || '',
     password: '',
     username: localStorage.getItem('username') || '',
     userType: localStorage.getItem('userType') || 'user',
@@ -78,6 +80,9 @@ const authSlice = createSlice({
       localStorage.removeItem('token');
       localStorage.removeItem('username');
       localStorage.removeItem('userType');
+      localStorage.removeItem('email');
+
+
     },
   },
   extraReducers: (builder) => {

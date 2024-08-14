@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import axios from 'axios';
 import { createOrder } from '../../redux/orders/orderSlice';
 import { toast } from 'react-toastify';
-import { Form, Button, Container, Row, Col, ListGroup, Alert } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col, ListGroup, Alert, Card } from 'react-bootstrap';
+
 
 const API_URL = 'http://localhost:4000/api';
 
@@ -20,9 +21,13 @@ const OrderForm = () => {
     const [cartItems, setCartItems] = useState([]);
     const [productDetailsMap, setProductDetailsMap] = useState({});
     const [paymentMethod, setPaymentMethod] = useState('card'); // Default payment method
+    const { email } = useSelector((state) => state.auth);
+
 
     // Fetch cart items and product details
     useEffect(() => {
+        // console.log(email);
+        
         const fetchCartItemsAndProducts = async () => {
             try {
                 // Fetch cart items
@@ -120,7 +125,7 @@ const OrderForm = () => {
             <Form onSubmit={handleSubmit}>
                 {/* Payment Method Selection */}
                 <Form.Group controlId="payment-method" className="mb-3">
-                    <Form.Label>Payment Method</Form.Label>
+                    <Form.Label>Choose Payment Method</Form.Label>
                     <Form.Control
                         as="select"
                         value={paymentMethod}
@@ -134,7 +139,7 @@ const OrderForm = () => {
                 {/* Card Payment Details */}
                 {paymentMethod === 'card' && (
                     <Form.Group controlId="card-element" className="mb-3">
-                        <Form.Label>Credit or Debit Card</Form.Label>
+                        <Form.Label>Enter Card Number</Form.Label>
                         <div className="form-control p-2">
                             <CardElement id="card-element" />
                         </div>
@@ -176,9 +181,19 @@ const OrderForm = () => {
                     <h4>Total Price: ₹{totalPrice.toFixed(2)}</h4>
                 </Form.Group>
 
-                <Button type="submit" variant="primary" disabled={loading}>
-                    {loading ? 'Processing...' : 'Place Order'}
-                </Button>
+                <Card className="mb-3 w-75">
+                    <Card.Body>
+                        <div className='d-flex justify-content-between'>
+                                <Card.Text>
+                                   <div> An email about order status will be delivered to <strong>{email}</strong></div>
+                                </Card.Text>
+                                <Button type="submit" variant="success" disabled={loading}>
+                                    {loading ? 'Processing...' : 'Place Order'}
+                                </Button>
+                           
+                        </div>
+                    </Card.Body>
+                    </Card>
             </Form>
         </Container>
     );
